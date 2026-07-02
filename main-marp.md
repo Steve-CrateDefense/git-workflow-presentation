@@ -91,8 +91,13 @@ section ul ul li { font-size: 18px; }
 
 # Solution (contd)
 - Enforce all infrastructure changes be made through automation
+    - Build out Gitlab pipeline code
+    - Enforce via team policy all deployment happen via pipelines
 - Create test environment to validate changes
 - Create and enforce multi-domain code sync and deployments
+    - Enforce via team policy that all features are tested then deployed in all three environments,
+    Ensuring all features are correctly deployed in all environments completing the sync
+    - Fix CDS syncs to allow branching and tags to properly sync to high side environments
 
 --- 
 
