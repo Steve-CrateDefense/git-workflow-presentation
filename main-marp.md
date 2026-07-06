@@ -13,20 +13,21 @@ A migration from trunk chaos to versioned deployments.
 ---
 
 # Background
-- Platform had been active for 5 years
+- Platform active for 5 years
 - Pre-existing infrastructure with IaC
+- Hired to implement an updated Platform solution
 - Multi-domain Commercial, Govcloud, Secret, Top Secret AWS deployments
-- Small team: Manager, Senior Platform Engineer, Myself
+- Team: Manager, Senior Platform Engineer, Junior Platform Engineer, Myself
 - High previous turnover
+- 7 Tenants onboarded to Platform with a mix of Dev/Stg/Prd
 
 ---
 
 # Problem
-- Low confidence in version controlled IaC
+- Low confidence in deploying any infrastructure or platform tooling changes from existing IaC
 - Configuration drift between Classification domains
-- Low confidence in deploying any infrastructure or platform tooling changes
 - Intermittent production outages
-- Very low staff morale
+- Low staff morale
 
 ---
 <style scoped>
@@ -38,20 +39,22 @@ section ul ul li { font-size: 18px; }
 
 # Analysis
 - No meaningful version control workflow
-    - Reviewed current state of repositories in GitLab, including Terraform modules and large "driver" mono-repo
-    - Difficult to perform any rollbacks or iterate on modules.
-    - Updates to main monorepo were difficult and poorly tracked.
-    - GitLab existed on SIPR and JWICS but was not utilized for source code control by the Platform team.
+    - No tags or releases used
+    - Sloppy use and maintanance of feature branches
+    - Code missing from central repository
+    - Classified region code updates never merged into central repository
 - No code validation or test procedures
-    - No test environment, updates done in production
-    - Updates or changes were regularly rolled back sloppily. 
-    - Changes were iterated on in a production setting usually breaking functionality.
+    - No Platform test environment
+    - All changes made in developer UAT/STG or Production environments
 - Manual local deployments
-    - Platform team deployments were always done on a local machine, making it almost impossible to trace who made changes and the breadth of those changes
-    - Many times small changes or bugfixes were never checked into central version control system, or were left dangling as feature branches untracked
+    - Deployments done from local laptops
+    - No traceability
+    - Small bug fixes not merged into central repository
     - Development teams regularly made changes in the AWS console (on all classifications)
 - One off divergent deployments across classification domains
-    - Code bundled into containers pushed to classified regions; changes were never sync'd into the SIPR or JWICS GitLab
+    - Gitlab existed but wasn't used
+    - Code updates saved in a string of Docker containers
+    - No traceability on who/what changed
 
 ---
 <style scoped>
@@ -75,10 +78,19 @@ section ul ul li { font-size: 18px; }
 # Solution
 - Institute mandatory git based workflow
     - Legacy repository structure was mostly scrapped
-    - A three-tiered structure replaced it: driver, modules, various terraform modules
+    - A three-tiered structure replaced it: driver,  terragrunt modules, terraform modules
+        - Driver: Holds automation and injected remote config and variables
+        - Terragrunt Modules: Holds terragrunt stacks and units
+        - Terraform Modules: Holds terraform module code
     - Allowed independent small changes to be made without affecting the wider system
-
-![bg right:68% w:90%](./assets/new_repo_structure.drawio.svg)
+- Enforce all infrastructure changes be made through automation
+    - Build out Gitlab pipeline code
+    - Enforce via team policy all deployment happen via pipelines
+- Create test environment to validate changes
+- Create and enforce multi-domain code sync and deployments
+    - Enforce via team policy that all features are tested then deployed in all three environments,
+    Ensuring all features are correctly deployed in all environments completing the sync
+    - Fix CDS syncs to allow branching and tags to properly sync to high side environments
 
 --- 
 
@@ -89,15 +101,8 @@ li { margin-bottom: 0.3em; }
 section ul ul li { font-size: 18px; }
 </style>
 
-# Solution (contd)
-- Enforce all infrastructure changes be made through automation
-    - Build out Gitlab pipeline code
-    - Enforce via team policy all deployment happen via pipelines
-- Create test environment to validate changes
-- Create and enforce multi-domain code sync and deployments
-    - Enforce via team policy that all features are tested then deployed in all three environments,
-    Ensuring all features are correctly deployed in all environments completing the sync
-    - Fix CDS syncs to allow branching and tags to properly sync to high side environments
+## Solution: New Git Repository
+![bg right:68% w:90%](./assets/new_repo_structure.drawio.svg)
 
 --- 
 
