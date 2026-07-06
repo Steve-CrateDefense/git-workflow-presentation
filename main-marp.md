@@ -7,8 +7,8 @@ paginate: true
 ---
 <!--- _class: lead invert --->
 
-# A Tale Of Two Terraform Deployments
-A migration tale from unruly deployments to automation zen.
+# Simple Git Updates that Unlocked Velocity
+A migration from trunk chaos to versioned deployments.
 
 ---
 
@@ -22,10 +22,10 @@ A migration tale from unruly deployments to automation zen.
 ---
 
 # Problem
+- Low confidence in version controlled IaC
 - Configuration drift between Classification domains
-- Intermittent production outages
 - Low confidence in deploying any infrastructure or platform tooling changes
-- Low confidence in version controlled code sync
+- Intermittent production outages
 - Very low staff morale
 
 ---
@@ -61,7 +61,7 @@ li { margin-bottom: 0.3em; }
 section ul ul li { font-size: 18px; }
 </style>
 
-# Analysis Git Workflow
+# Analysis:  Legacy Git Workflow
 ![bg right:68% h:90%](./assets/old_workflow.drawio.svg)
 
 ---
