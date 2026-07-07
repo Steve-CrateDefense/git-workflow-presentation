@@ -1,3 +1,3 @@
 locals {
-    customer_input = get_env("CUSTOMER-1_INPUT")
+    customer_input = get_env("CUSTOMER_1_INPUT")
 }
