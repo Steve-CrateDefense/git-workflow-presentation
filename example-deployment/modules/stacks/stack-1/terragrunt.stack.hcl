@@ -14,6 +14,6 @@ unit "module_2" {
 
   values = {
     git_url = values.git_url
-        value = values.value2
+    value = values.value2
   }
 }
