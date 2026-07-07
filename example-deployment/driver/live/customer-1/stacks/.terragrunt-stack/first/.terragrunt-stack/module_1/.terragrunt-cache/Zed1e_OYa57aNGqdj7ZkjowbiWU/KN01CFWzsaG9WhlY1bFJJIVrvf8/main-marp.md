@@ -7,24 +7,24 @@ paginate: true
 ---
 <!--- _class: lead invert --->
 
-# Git Updates that Unlocked Platform Development Velocity
+# Simple Git Updates that Unlocked Velocity
 A migration from trunk chaos to versioned deployments.
 
 ---
 
 # Background
-- Hired to implement an updated Platform solution
 - Platform active for 5 years
 - Pre-existing infrastructure with IaC
+- Hired to implement an updated Platform solution
 - Multi-domain Commercial, Govcloud, Secret, Top Secret AWS deployments
-- 7 Tenants onboarded to Platform with a mix of Dev/Stg/Prd spread throughout classifications
 - Team: Manager, Senior Platform Engineer, Junior Platform Engineer, Myself
 - High previous turnover
+- 7 Tenants onboarded to Platform with a mix of Dev/Stg/Prd
 
 ---
 
 # Problem
-- Low confidence in deploying existing IaC
+- Low confidence in deploying any infrastructure or platform tooling changes from existing IaC
 - Configuration drift between Classification domains
 - Intermittent production outages
 - Low staff morale
@@ -79,8 +79,8 @@ section ul ul li { font-size: 18px; }
     - Legacy repository structure was mostly scrapped
     - A three-tiered structure replaced it: driver,  terragrunt modules, terraform modules
         - Driver: Holds automation and injected remote config and variables
-        - Terragrunt Modules: Version controlled artifact holding terragrunt stacks and units
-        - Terraform Modules: Version controlled artifact holding terraform module code
+        - Terragrunt Modules: Holds terragrunt stacks and units
+        - Terraform Modules: Holds terraform module code
     - Allowed independent small changes to be made without affecting the wider system
 - Enforce all infrastructure changes be made through automation
     - Build out Gitlab pipeline code
@@ -127,22 +127,23 @@ section ul ul li { font-size: 18px; }
 <style scoped>
 section { padding-top: 22px; font-size: 22px; }
 h1 { font-size: 32px; }
-pre { font-size: 16px; line-height: 1.25; }
+pre { font-size: 13px; line-height: 1.25; }
 </style>
 
 # Appendix: Walking a Version Change Through the Stack
 
-Versions file holds the current version that should be utilized
 ```hcl
+# Versions file holds the current version that should be utilized
 # driver/versions.hcl
 
 locals {
     hub_version = "main"
     customer_1_version = "main"
 }
-```
-Version is used in the driver/live/tenant/terragrunt.stack.hcl to call a specific terragrunt module version
-```
+
+# Version is passed through the stack
+
+# Call remote stack from Driver repository
 # driver/terragrunt.stack.hcl
 
 stack "first" {
@@ -155,61 +156,13 @@ stack "first" {
     ...
   }
 }
-```
-Stack in module folders calls unit using passed in unit tag
-```
+
+# Stack calls unit using unit tag
 # modules/terragrunt.stack.hcl
 
 unit "module_1" {
   source = "${values.git_url}//example-deployment/modules/units/unit-2?ref=${values.unit_tag}"
   path = "module_1"
   ...
-}
-```
-
-
----
-
-<style scoped>
-section { padding-top: 22px; font-size: 22px; }
-h1 { font-size: 32px; }
-pre { font-size: 16px; line-height: 1.25; }
-</style>
-
-# Appendix: Different Remote Value Usage
-
-Multiple remote values files are held inside a separate repository
-
-```hcl
-# Remote files
-remote-config
-├── environment1.env
-└── environment2.env
-```
-
-Inside the automation pipeline a check is done to see which values file should be used
-```bash
-
-# A default value is set per branch, is overriden by Gitlab pipeline variables on classified regions
-export CURRENT_ENVIRONMENT_CLASSIFICATION="environment1" 
-
-if [[ "${CURRENT_ENVIRONMENT_CLASSIFICATION}" = "environment1" ]]; then
-    cp remote-config/environment1.env .env
-elif [[ "${CURRENT_ENVIRONMENT_CLASSIFICATION} = "environment2" ]]; then
-    cp remote-config/environment2.env .env
-fi
-set -a
-source .env
-set +a
-```
-
-Various terragrunt files use get_env() to set the remote values per environment
-```
-# driver/values.hcl
-
-locals {
-    git_url = "get_env("GIT_URL", git::https://github.com/Steve-CrateDefense/git-workflow-presentation.git")
-    value1 = get_env("VALUE1", "default_value1")
-    value2 = get_env("VALUE2", "default_value2")
 }
 ```
