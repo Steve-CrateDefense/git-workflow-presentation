@@ -1,4 +1,4 @@
 locals {
-    hub_version = "main"
-    customer_1_version = "main"
+    hub_version = "test"
+    customer_1_version = "test"
 }

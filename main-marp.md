@@ -121,3 +121,48 @@ section ul ul li { font-size: 18px; }
 - Team morale improvement
 - Multiple pushes to IaC repositories daily
 - Bugs fixed and committed immediately
+
+---
+
+<style scoped>
+section { padding-top: 22px; font-size: 22px; }
+h1 { font-size: 32px; }
+pre { font-size: 13px; line-height: 1.25; }
+</style>
+
+# Appendix: Walking a Version Change Through the Stack
+
+```hcl
+# Versions file holds the current version that should be utilized
+# driver/versions.hcl
+
+locals {
+    hub_version = "main"
+    customer_1_version = "main"
+}
+
+# Version is passed through the stack
+
+# Call remote stack from Driver repository
+# driver/terragrunt.stack.hcl
+
+stack "first" {
+  source = "${local.global_vars.locals.git_url}//example-deployment/modules/stacks/stack-1?ref=${local.version_vars.locals.customer_1_version}"
+  path = "first"
+
+  values = {
+    unit_tag = local.version_vars.locals.customer_1_version
+    git_url = local.global_vars.locals.git_url
+    ...
+  }
+}
+
+# Stack calls unit using unit tag
+# modules/terragrunt.stack.hcl
+
+unit "module_1" {
+  source = "${values.git_url}//example-deployment/modules/units/unit-2?ref=${values.unit_tag}"
+  path = "module_1"
+  ...
+}
+```
