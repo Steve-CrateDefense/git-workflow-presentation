@@ -42,19 +42,18 @@ section ul ul li { font-size: 18px; }
     - No tags or releases used
     - Sloppy use and maintanance of feature branches
     - Code missing from central repository
-    - Classified region code updates never merged into central repository
-- No code validation or test procedures
-    - No Platform test environment
-    - All changes made in developer UAT/STG or Production environments
 - Manual local deployments
     - Deployments done from local laptops
     - No traceability
     - Small bug fixes not merged into central repository
     - Development teams regularly made changes in the AWS console (on all classifications)
 - One off divergent deployments across classification domains
-    - Gitlab existed but wasn't used
     - Code updates saved in a string of Docker containers
     - No traceability on who/what changed
+    - Classified region code updates never merged into central repository
+- No code validation or test procedures
+    - No Platform test environment
+    - All changes made in developer UAT/STG or Production environments
 
 ---
 <style scoped>
