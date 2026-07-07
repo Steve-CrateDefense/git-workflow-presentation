@@ -5,13 +5,12 @@ locals {
 }
 
 stack "first" {
-  source = "/stacks/second?ref=main"
-  #source = "${local.global_vars.locals.git_url}//example-deployment/stacks/first?ref=${local.version_vars.locals.customer_1_version}"
+  source = "${local.global_vars.locals.git_url}//example-deployment/modules/stacks/stack-1?ref=${local.version_vars.locals.customer_1_version}"
   path = "first"
 
   values = {
     unit_tag = local.version_vars.locals.customer_1_version
-    git_fqdn = local.global_vars.locals.git_url
+    git_url = local.global_vars.locals.git_url
     customer_input = local.config.locals.customer_input
   }
 }
