@@ -174,6 +174,7 @@ unit "module_1" {
 ```
 Unit file calling the hard coded terraform module
 ```hcl
+# modules/units/unit-1/terragrunt.hcl
 terraform {
   # Hard coded version tag
   source = "${values.git_url}//example-deployment/terraform-modules/module_1?ref=v0.X.Y"

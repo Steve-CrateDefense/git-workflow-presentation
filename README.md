@@ -13,6 +13,8 @@ Requirements:
 | Terragrunt |  >= v1.1.0 
 | OpenTofu | >= v1.12.3 
 
+## Remote config
+
 ```bash
 # Start at the repository root
 
