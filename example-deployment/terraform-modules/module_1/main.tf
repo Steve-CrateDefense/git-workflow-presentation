@@ -3,6 +3,6 @@ resource "terraform_data" "echo" {
     always_run = timestamp()
   }
   provisioner "local-exec" {
-    command = "echo 'Module_1 executed, remote value: ${var.value}.'"
+    command = "printf '\\033[0;31mModule_1 executed, remote value: ${var.value}.\\033[0m\\n'"
   }
 }
