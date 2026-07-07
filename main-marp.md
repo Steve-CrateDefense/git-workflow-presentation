@@ -110,10 +110,6 @@ section ul ul li { font-size: 18px; }
     - Overall little discussion required, changes were welcomed
     - Enforce git based workflows
     - Enforce deployment testing
-- Development teams:
-    - More discussion required, many permissions and features were removed from developers
-    - Remove admin access to infrastructure
-    - Remove kubectl access
 
 ---
 
@@ -195,7 +191,7 @@ export CURRENT_ENVIRONMENT_CLASSIFICATION="environment1"
 
 if [[ "${CURRENT_ENVIRONMENT_CLASSIFICATION}" = "environment1" ]]; then
     cp remote-config/environment1.env .env
-elif [[ "${CURRENT_ENVIRONMENT_CLASSIFICATION} = "environment2" ]]; then
+elif [[ "${CURRENT_ENVIRONMENT_CLASSIFICATION}" = "environment2" ]]; then
     cp remote-config/environment2.env .env
 fi
 set -a
