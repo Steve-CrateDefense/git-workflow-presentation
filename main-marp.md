@@ -222,7 +222,7 @@ Various terragrunt files use get_env() to set the remote values per environment
 # driver/values.hcl
 
 locals {
-    git_url = "get_env("GIT_URL", git::https://github.com/Steve-CrateDefense/git-workflow-presentation.git")
+    git_url = get_env("GIT_URL", git::https://github.com/Steve-CrateDefense/git-workflow-presentation.git")
     value1 = get_env("VALUE1", "default_value1")
     value2 = get_env("VALUE2", "default_value2")
 }
