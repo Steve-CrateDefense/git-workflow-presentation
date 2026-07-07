@@ -11,9 +11,6 @@ stack "first" {
   values = {
     unit_tag = local.version_vars.locals.customer_1_version
     git_url = local.global_vars.locals.git_url
-
     customer_input = local.config.locals.customer_input
-    value1 = local.global_vars.locals.value1
-    value2 = local.global_vars.locals.value2
   }
 }
