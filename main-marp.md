@@ -11,6 +11,12 @@ paginate: true
 A migration from trunk chaos to versioned deployments.
 
 ---
+<style scoped>
+section { padding-top: 30px; }
+section { font-size: 30px; }
+li { margin-bottom: 0.3em; }
+section ul ul li { font-size: 18px; }
+</style>
 
 # Background
 - Hired to implement an updated Platform solution
@@ -127,7 +133,7 @@ section ul ul li { font-size: 18px; }
 <style scoped>
 section { padding-top: 22px; font-size: 22px; }
 h1 { font-size: 32px; }
-pre { font-size: 16px; line-height: 1.25; }
+pre { font-size: 13px; line-height: 1.25; }
 </style>
 
 # Appendix: Walking a Version Change Through the Stack
@@ -143,7 +149,7 @@ locals {
 ```
 Version is used in the driver/live/tenant/terragrunt.stack.hcl to call a specific terragrunt module version
 ```
-# driver/terragrunt.stack.hcl
+# driver/live/customer-1/stacks/terragrunt.stack.hcl
 
 stack "first" {
   source = "${local.global_vars.locals.git_url}//example-deployment/modules/stacks/stack-1?ref=${local.version_vars.locals.customer_1_version}"
@@ -158,15 +164,22 @@ stack "first" {
 ```
 Stack in module folders calls unit using passed in unit tag
 ```
-# modules/terragrunt.stack.hcl
+# modules/stacks/stack-1terragrunt.stack.hcl
 
 unit "module_1" {
-  source = "${values.git_url}//example-deployment/modules/units/unit-2?ref=${values.unit_tag}"
+  source = "${values.git_url}//example-deployment/modules/units/unit-1?ref=${values.unit_tag}"
   path = "module_1"
   ...
 }
 ```
-
+Unit file calling the hard coded terraform module
+```hcl
+terraform {
+  # Hard coded version tag
+  source = "${values.git_url}//example-deployment/terraform-modules/module_1?ref=v0.X.Y"
+}
+...
+```
 
 ---
 
