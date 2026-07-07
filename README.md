@@ -8,9 +8,10 @@ This project uses [MARP](https://marp.app/) to view slideshow deck. I personally
 The repository for brevity is kept in a single repository, usually each of the 4 folders under `example-deployment` would be separate repositories.
 
 Requirements: 
-Terragrunt >= v1.1.0
-
-OpenTofu >= v1.12.3
+| Tool | Version
+|--- | ---
+| Terragrunt |  >= v1.1.0 
+| OpenTofu | >= v1.12.3 
 
 ```bash
 # Start at the repository root

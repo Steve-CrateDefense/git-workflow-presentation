@@ -110,6 +110,10 @@ section ul ul li { font-size: 18px; }
     - Overall little discussion required, changes were welcomed
     - Enforce git based workflows
     - Enforce deployment testing
+- Program management: 
+    - Pushback on new platform development length and time
+    - Set expectations
+    - Show value new system provided
 
 ---
 
