@@ -1,5 +1,5 @@
 unit "module_1" {
-  source = "${values.git_url}//example-deployment/modules/units/unit-2?ref=$(values.unit_tag)"
+  source = "${values.git_url}//example-deployment/modules/units/unit-2?ref=${values.unit_tag}"
   path = "module_1"
 }
 
