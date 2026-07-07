@@ -9,6 +9,7 @@ The repository for brevity is kept in a single repository, usually each of the 4
 
 Requirements: 
 Terragrunt >= v1.1.0
+
 OpenTofu >= v1.12.3
 
 ```bash
